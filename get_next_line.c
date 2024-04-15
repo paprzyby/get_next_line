@@ -6,17 +6,17 @@
 /*   By: paprzyby <paprzyby@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:51:44 by paprzyby          #+#    #+#             */
-/*   Updated: 2024/04/15 10:30:10 by paprzyby         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:25:44 by paprzyby         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*rest(char *str)
+char	*get_the_rest(char *str)
 {
 	int		i;
 	int		j;
-	char	*restof;
+	char	*rest;
 
 	i = 0;
 	while (str[i] != '\n' && str[i] != '\0')
@@ -26,16 +26,16 @@ char	*rest(char *str)
 		free(str);
 		return (NULL);
 	}
-	restof = (char *)malloc(sizeof(char) * (ft_strlen(str) - i + 1));
-	if (!restof)
+	rest = (char *)malloc(sizeof(char) * (ft_strlen(str) - i + 1));
+	if (!rest)
 		return (NULL);
 	i++;
 	j = 0;
 	while (str[i])
-		restof[j++] = str[i++];
-	restof[j] = '\0';
+		rest[j++] = str[i++];
+	rest[j] = '\0';
 	free(str);
-	return (restof);
+	return (rest);
 }
 
 char	*create_next_line(char *str)
@@ -45,6 +45,8 @@ char	*create_next_line(char *str)
 
 	i = 0;
 	while (str[i] != '\n' && str[i] != '\0')
+		i++;
+	if (str[0] == '\n' || str[i] == '\n')
 		i++;
 	line = (char *)malloc((i + 1) * sizeof(char));
 	if (!line)
@@ -60,12 +62,10 @@ char	*create_next_line(char *str)
 
 char	*find_next_line(int fd, char *str)
 {
-	char		*buffer;
-	int			size;
+	char	*buffer;
+	int		size;
 
 	buffer = ft_calloc(BUFFER_SIZE + 1);
-	if (!buffer)
-		return (NULL);
 	while (ft_strchr(buffer, '\n') == NULL)
 	{
 		size = read(fd, buffer, BUFFER_SIZE);
@@ -77,9 +77,8 @@ char	*find_next_line(int fd, char *str)
 		}
 		if (size == 0)
 			break ;
-		buffer[size + 1] = '\0';
+		buffer[size] = '\0';
 		str = ft_strjoin(str, buffer);
-		printf("The full string is: %s", str);
 	}
 	free(buffer);
 	return (str);
@@ -93,13 +92,10 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
 	str = find_next_line(fd, str);
-	printf("The full string is: %s", str);
 	if (!str)
-		return (0);
+		return (NULL);
 	line = create_next_line(str);
-	printf("The line is: %s", line);
-	str = rest(str);
-	printf("The rest is: %s", str);
+	str = get_the_rest(str);
 	return (line);
 }
 
@@ -114,11 +110,11 @@ int main()
 		printf("Error opening file\n");
 		return (1);
 	}
-	while ((str = get_next_line(fd)) != NULL)
-	{
-		printf("%s", str);
-		free(str);
-	}
+	str = get_next_line(fd);
+	printf("%s", str);
+	//while ((str = get_next_line(fd)) != NULL)
+	//	printf("%s", str);
+	free(str);
 	close(fd);
 	return (0);
 }
