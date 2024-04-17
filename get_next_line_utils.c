@@ -6,7 +6,7 @@
 /*   By: paprzyby <paprzyby@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:37:41 by paprzyby          #+#    #+#             */
-/*   Updated: 2024/04/15 14:10:24 by paprzyby         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:46:57 by paprzyby         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 char	*if_str_empty(char *str)
 {
 	str = (char *)malloc(1 * sizeof(char));
-	str[0] = '\0';
 	if (!str)
 		return (NULL);
+	str[0] = '\0';
 	return (str);
 }
 
-void	*ft_calloc(size_t size)
+void	*ft_calloc(int size)
 {
-	size_t	i;
+	int		i;
 	char	*str;
 
 	i = 0;
@@ -72,8 +72,11 @@ char	*ft_strjoin(char *str, char *buffer)
 	j = 0;
 	if (!str)
 		str = if_str_empty(str);
-	if (!str || !buffer)
+	if (!buffer)
+	{
+		str = NULL;
 		return (NULL);
+	}
 	new = malloc(sizeof(char) * ((ft_strlen(str) + ft_strlen(buffer)) + 1));
 	if (!new)
 		return (NULL);

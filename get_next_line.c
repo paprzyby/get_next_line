@@ -6,7 +6,7 @@
 /*   By: paprzyby <paprzyby@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:51:44 by paprzyby          #+#    #+#             */
-/*   Updated: 2024/04/15 14:25:44 by paprzyby         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:17:40 by paprzyby         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 char	*get_the_rest(char *str)
 {
-	int		i;
-	int		j;
-	char	*rest;
+	unsigned int		i;
+	unsigned int		j;
+	char			*rest;
 
 	i = 0;
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
-	if (!str[i])
+	if (str[i] == '\0')
 	{
 		free(str);
 		return (NULL);
 	}
-	rest = (char *)malloc(sizeof(char) * (ft_strlen(str) - i + 1));
+	rest = (char *)malloc((ft_strlen(str) - i + 1) * sizeof(char));
 	if (!rest)
 		return (NULL);
 	i++;
 	j = 0;
-	while (str[i])
+	while (str[i] != '\0')
 		rest[j++] = str[i++];
 	rest[j] = '\0';
 	free(str);
@@ -44,6 +44,8 @@ char	*create_next_line(char *str)
 	unsigned int	i;
 
 	i = 0;
+	if (str[i] == '\0')
+		return (NULL);
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
 	if (str[0] == '\n' || str[i] == '\n')
@@ -66,7 +68,7 @@ char	*find_next_line(int fd, char *str)
 	int		size;
 
 	buffer = ft_calloc(BUFFER_SIZE + 1);
-	while (ft_strchr(buffer, '\n') == NULL)
+	while (ft_strchr(str, '\n') == NULL)
 	{
 		size = read(fd, buffer, BUFFER_SIZE);
 		if (size == -1)
@@ -90,7 +92,7 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
+		return (NULL);
 	str = find_next_line(fd, str);
 	if (!str)
 		return (NULL);
@@ -99,22 +101,20 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int main()
-{
-	char	*str;
-	int		fd;
+//int main()
+//{
+//	char	*str;
+//	int		fd;
 
-	fd = open("test.txt", O_RDONLY);
-	if (fd == -1)
-	{
-		printf("Error opening file\n");
-		return (1);
-	}
-	str = get_next_line(fd);
-	printf("%s", str);
-	//while ((str = get_next_line(fd)) != NULL)
-	//	printf("%s", str);
-	free(str);
-	close(fd);
-	return (0);
-}
+//	fd = open("test.txt", O_RDONLY);
+//	if (fd == -1)
+//	{
+//		printf("Error opening file\n");
+//		return (1);
+//	}
+//	//printf("%s", get_next_line(fd));
+//	while((str = get_next_line(fd)) != NULL)
+//		printf("%s", str);
+//	close(fd);
+//	return (0);
+//}
