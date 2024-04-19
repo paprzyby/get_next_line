@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paprzyby <paprzyby@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/05 14:51:44 by paprzyby          #+#    #+#             */
-/*   Updated: 2024/04/18 14:27:02 by paprzyby         ###   ########.fr       */
+/*   Created: 2024/04/18 14:29:25 by paprzyby          #+#    #+#             */
+/*   Updated: 2024/04/19 05:46:28 by paprzyby         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_the_rest(char *str)
 {
@@ -88,33 +88,22 @@ char	*find_next_line(int fd, char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*str;
+	static char	*str[256];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	str = find_next_line(fd, str);
-	if (!str)
+	str[fd] = find_next_line(fd, str[fd]);
+	if (!str[fd])
 		return (NULL);
-	line = create_next_line(str);
-	str = get_the_rest(str);
+	line = create_next_line(str[fd]);
+	str[fd] = get_the_rest(str[fd]);
 	return (line);
 }
 
-//int main()
-//{
-//	char	*str;
-//	int		fd;
+//the maximum length of a char is 255 + 1 for the '\0'
 
-//	fd = open("test.txt", O_RDONLY);
-//	if (fd == -1)
-//	{
-//		printf("Error opening file\n");
-//		return (1);
-//	}
-//	//printf("%s", get_next_line(fd));
-//	while((str = get_next_line(fd)) != NULL)
-//		printf("%s", str);
-//	close(fd);
-//	return (0);
-//}
+//[fd] is used to store a string in the str array corresponding
+//to the file descriptor fd.
+//This allows the function to maintain separate string buffers
+//for different file descriptors

@@ -1,21 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paprzyby <paprzyby@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/05 14:49:43 by paprzyby          #+#    #+#             */
-/*   Updated: 2024/04/17 19:03:40 by paprzyby         ###   ########.fr       */
+/*   Created: 2024/04/18 14:29:06 by paprzyby          #+#    #+#             */
+/*   Updated: 2024/04/19 05:33:04 by paprzyby         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#if !defined(GET_NEXT_LINE_H)
-# define GET_NEXT_LINE_H
-
-//#if !defined BUFFER_SIZE
-//# define BUFFER_SIZE 5
-//# endif
+#if !defined(GET_NEXT_LINE_BONUS_H)
+# define GET_NEXT_LINE_BONUS_H
 
 # include <stdlib.h>
 # include <stddef.h>
