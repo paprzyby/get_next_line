@@ -6,7 +6,7 @@
 /*   By: paprzyby <paprzyby@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:29:25 by paprzyby          #+#    #+#             */
-/*   Updated: 2024/04/19 05:46:28 by paprzyby         ###   ########.fr       */
+/*   Updated: 2024/04/22 08:11:24 by paprzyby         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,6 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-//the maximum length of a char is 255 + 1 for the '\0'
-
-//[fd] is used to store a string in the str array corresponding
-//to the file descriptor fd.
+//[fd] is used to store a string corresponding to the file descriptor
 //This allows the function to maintain separate string buffers
 //for different file descriptors
